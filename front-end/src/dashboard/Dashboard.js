@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
+import { useHistory } from "react-router";
+import {previous,next} from "../utils/date-time";
+import ReservationTable from "../layout/ReservationTable";
+
 
 /**
  * Defines the dashboard page.
@@ -11,6 +15,10 @@ import ErrorAlert from "../layout/ErrorAlert";
 function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
+  const history = useHistory();
+
+
+    
 
   useEffect(loadDashboard, [date]);
 
@@ -23,14 +31,52 @@ function Dashboard({ date }) {
     return () => abortController.abort();
   }
 
+  console.log(reservations);
+
+
+
+  //// handle dashboard buttons 
+
+function handleToday(){
+  history.push("/dashboard")
+
+}
+
+ function handlePrevious(){
+  
+
+  history.push(`/dashboard?date=${previous(date)}`);
+
+ }
+
+
+  function handleNext(){
+    history.push(`/dashboard?date=${next(date)}`)
+
+  }
+
+
+
+
+
+
   return (
     <main>
       <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date</h4>
+        <h4 className="mb-0">Reservations for {date}</h4>
       </div>
+
+      <div class="btn-group" role="group" aria-label="Basic example">
+     <button type="button" className="btn btn-secondary mr-1"   onClick = {handlePrevious}> <span className="oi oi-chevron-left"></span>Previous</button>
+     <button type="button" className="btn btn-secondary mr-1" onClick={handleToday}>Today</button>
+     <button type="button" className="btn btn-secondary mr-1" onClick={handleNext}>Next <span className="oi oi-chevron-right"></span></button>
+     </div>
       <ErrorAlert error={reservationsError} />
-      {JSON.stringify(reservations)}
+      {/* {JSON.stringify(reservations)} */}
+
+      <ReservationTable reservations={reservations}/>
+
     </main>
   );
 }
