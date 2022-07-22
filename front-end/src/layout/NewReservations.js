@@ -5,8 +5,6 @@ import { createReservation } from "../utils/api";
 import { isNotOnTuesday } from "../utils/date-time";
 import { isInTheFuture } from "../utils/date-time";
 import ErrorAlert from "./ErrorAlert";
-import { isInTheFuture } from "../utils/date-time";
-import { isNotOnTuesday } from "../utils/date-time";
 
 function NewReservations() {
   let history = useHistory();
@@ -42,7 +40,7 @@ function NewReservations() {
   return (
     <div>
       <h1> Create Reservation</h1>
-      <ErrorAlert error={reservationsError} />
+      <ErrorAlert className="alert alert-danger" error={reservationsError} />
       <ReservationForm submitForm={createNewReservation} />
     </div>
   );
