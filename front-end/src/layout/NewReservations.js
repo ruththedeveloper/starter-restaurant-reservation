@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import ReservationForm from "./ReservationForm";
 import { useHistory } from "react-router";
 import { createReservation } from "../utils/api";
-import ErrorAlert from "./ErrorAlert";
-import { isInTheFuture } from "../utils/date-time";
 import { isNotOnTuesday } from "../utils/date-time";
+import { isInTheFuture } from "../utils/date-time";
+import ErrorAlert from "./ErrorAlert";
 
 function NewReservations() {
   let history = useHistory();
@@ -14,7 +14,6 @@ function NewReservations() {
     isNotOnTuesday(date, errors);
     isInTheFuture(date, errors);
   };
-
 
   async function createNewReservation(formData) {
     const abortController = new AbortController();
@@ -41,10 +40,10 @@ function NewReservations() {
   return (
     <div>
       <h1> Create Reservation</h1>
-      <ErrorAlert error={reservationsError} />
+      <ErrorAlert className="alert alert-danger" error={reservationsError} />
       <ReservationForm submitForm={createNewReservation} />
     </div>
   );
-}
+};
 
 export default NewReservations;
