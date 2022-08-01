@@ -6,6 +6,9 @@ import NotFound from "./NotFound";
 import { today } from "../utils/date-time";
 import NewReservations from "./NewReservations";
 import useQuery from "../utils/useQuery";
+import Tables from "../layout/Tables"
+import Search from "./Search";
+import ReservationSeat from "./ReservationSeat";
 
 /**
  * Defines all the routes for the application.
@@ -30,6 +33,16 @@ function Routes() {
       </Route>
       <Route exact path="/reservations/new">
         <NewReservations/>
+      </Route>
+      <Route exact path="/reservations/:reservation_id/seat">
+        <ReservationSeat />
+
+      </Route>
+      <Route path ="/tables/new">
+        <Tables/>
+      </Route>
+      <Route path="/search">
+        <Search/>
       </Route>
       <Route>
         <NotFound />
