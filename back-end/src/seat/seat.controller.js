@@ -6,11 +6,11 @@ const reservationService = require("../reservations/reservations.service");
 //// middlewares
 
 function hasReservationId(req, res, next) {
-  const table = req.body.data;
-  if (!table) {
+  const data = req.body.data;
+  if (!data) {
     return next({ status: 400, message: "Must have data property" });
   }
-  if (!table.reservation_id) {
+  if (!data.reservation_id) {
     return next({ status: 400, message: "Must have reservation_id" });
   }
   next();
@@ -38,7 +38,6 @@ async function tableIsValid(req, res, next) {
   const { table_id } = req.params;
   const currentTable = await tableService.read(table_id);
   const reservation = res.locals.reservation;
-  console.log("got here");
   if (reservation.people > currentTable.capacity) {
     return next({
       status: 400,
@@ -68,17 +67,17 @@ async function tableIsOccupied(req, res, next) {
 async function update(req, res, next) {
   const { reservation_id } = req.body.data;
   const { table_id } = req.params;
-  await service.update(table_id, reservation_id);
+  await service.update(table_id, reservation_id,"seated");
   res.status(200).json({ data: reservation_id });
 }
 
 async function notAssigned(req, res, next) {
   const { table_id } = req.params;
-  const reservation = await reservationService.finish(
-    res.locals.reservation_id
-  );
+  // const reservation = await reservationService.finish(
+  //   res.locals.reservation_id
+  // );
   
-  const table = await service.update(table_id, null);
+  const table = await service.update(table_id, res.locals.reservation_id, "finished");
   res.json({ data: table });
 }
 

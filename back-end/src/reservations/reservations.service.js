@@ -4,11 +4,12 @@ const knex = require("../db/connection");
 function list() {
   return knex("reservations")
     .select("*")
+    .whereNotIn("status",["finished","cancelled"])
     .orderBy("reservations.reservation_date");
 }
 
 function create(reservation) {
-  return knex("reservations as r")
+  return knex("reservations  as r")
     .insert(reservation)
     .returning("*")
     .then((NewReservation) => NewReservation[0]);
@@ -30,8 +31,9 @@ function read(reservation_id) {
 
 function update(reservation_id, status) {
   return knex("reservations")
+    .select("*")
     .where({ reservation_id })
-    .update({ status })
+    .update({ status}, "*")
     .then((updated) => updated[0]);
 }
 
