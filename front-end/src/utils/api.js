@@ -70,6 +70,27 @@
      .then(formatReservationDate)
      .then(formatReservationTime);
  }
+
+
+ export async function getReservation(reservation_id, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations/${reservation_id}`);
+  
+  return await fetchJson(url, { headers, signal }, [])
+    .then(formatReservationDate)
+    .then(formatReservationTime);
+}
+
+
+
+
+
+
+
+
+
+
+
+
  
  
  export async function createReservation(reservation, signal) {
@@ -85,7 +106,7 @@
  
  //// create new table 
  export async function createTable (table, signal) {
-   const url = `${API_BASE_URL}/reservations`;
+   const url = `${API_BASE_URL}/tables`;
    const options = {
      method: "POST",
      headers,
@@ -98,11 +119,51 @@
  
  
  
- // /// list all tables / retrieves all tables 
- //  export async function listTables(signal){
- //   const url = `${API_BASE_URL}/tables`
- //   return await fetchJson(url,{headers,signal},[])
- //  }
+ /// list all tables / retrieves all tables 
+  export async function listTables(signal){
+   const url = `${API_BASE_URL}/tables`
+   return await fetchJson(url,{headers,signal},[])
+  }
+
+  export async function unassignedTable(table_id,reservation_id,signal){
+    const url = `${API_BASE_URL}/tables/${table_id}/seat`;
+    const options = {
+      method: "DELETE",
+      headers,
+      body: JSON.stringify({ data:{reservation_id}}),
+      signal,
+    };
+    return await fetchJson(url, options, []);
+   }
+
+   export async function updateTable(table_id, reservation_id,signal){
+    const url = `${API_BASE_URL}/tables/${table_id}/seat`;
+    const options = {
+      method: "PUT",
+      headers,
+      body: JSON.stringify({ data:{reservation_id}}),
+      signal,
+    
+    };
+    return await fetchJson(url, options, []);
+   }
+
+
+
+
+
+   export async function cancelReservation(reservation_id){
+    const url = `${API_BASE_URL}/reservations/${reservation_id}/status`;
+    const options = {
+      method: "PUT",
+      headers,
+      body: JSON.stringify({ data:{status:"cancelled"}}),
+    
+    };
+    return await fetchJson(url, options, []);
+   }
+
+
  
  //  // seat RESERVATION
  //   export async function  seatReservation(table_id,reservation_id,signal){

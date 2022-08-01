@@ -1,44 +1,74 @@
 import React from "react";
+//import {Link }from "react-router-dom"
+//import { cancelReservation } from "../utils/api";
+//import { useHistory } from "react-router-dom";
 
-function ReservationTable({ reservations }) {
-  console.log(reservations);
+function ReservationTable({
+  reservations,
+  setReservationsError,
+  setReservations,
+}) {
+  // const history = useHistory();
+  if (!reservations) {
+    return null;
+  }
+
+  // function handleCancel() {
+  //   console.log("cancelled");
+  // }
+
 
   const reservationEl = reservations?.map((reservation) => {
+     
+  const { reservation_id} = reservation;
+
     return (
       <tr key={reservation.reservation_id}>
-        {" "}
         <td>{reservation.reservation_id}</td>
-        <td>{reservation.first_name } { reservation.last_name}</td>
+        <td>
+        {reservation.first_name} {reservation.last_name}
+        </td>
         <td>{reservation.mobile_number}</td>
         <td>{reservation.reservation_date}</td>
         <td>{reservation.reservation_time}</td>
         <td>{reservation.people}</td>
-        <td>{reservation.status}</td>
+        <td data-reservation-id-status={reservation_id}>{reservation.status}</td>
+        {reservation.status !== 'seated' &&
+        (<>
         <td>
-          {" "}
-          <a class="btn btn-secondary" href="#" role="button">
+          <a
+            className="btn btn-secondary"
+            href={`/reservations/${reservation_id}/seat`}
+          >
             Seat
           </a>
         </td>
         <td>
-          {" "}
-          <a class="btn btn-secondary" href="#" role="button">
+          <button
+            className="btn btn-secondary"
+            href={`/reservations/${reservation_id}/edit`}
+          >
             Edit
-          </a>
+          </button>
         </td>
         <td>
-          {" "}
-          <a class="btn btn-secondary" href="#" role="button">
+          <button
+            className="btn btn-danger"
+            data-reservation-id-cancel={reservation_id}
+            // onClick={handleCancel}
+          >
             Cancel
-          </a>
+          </button>
         </td>
+        </>)
+       }
       </tr>
     );
   });
 
   return (
     <div>
-      <table class="table">
+      <table className="table">
         <thead>
           <tr>
             <th scope="col">#</th>

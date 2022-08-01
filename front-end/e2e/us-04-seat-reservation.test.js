@@ -171,19 +171,18 @@ describe("US-04 - Seat reservation - E2E", () => {
 
     test("seating reservation at table #1 makes the table occupied", async () => {
       await page.waitForSelector('option:not([value=""])');
-
+     
       await page.screenshot({
         path: ".screenshots/us-04-seat-reservation-start.png",
         fullPage: true,
       });
-
+      
       await selectOptionByText(page, "table_id", "#1 - 6");
 
       await page.screenshot({
         path: ".screenshots/us-04-seat-reservation-submit-before.png",
         fullPage: true,
       });
-
       await Promise.all([
         page.click("[type=submit]"),
         page.waitForNavigation({ waitUntil: "networkidle0" }),
@@ -195,10 +194,12 @@ describe("US-04 - Seat reservation - E2E", () => {
       });
 
       expect(page.url()).toContain("/dashboard");
-      expect(page).toMatch(/occupied/i);
+      console.log("at the end of the test",page.url())
+       expect(page).toMatch(/occupied/i);
     });
 
     test("cannot seat reservation at Bar #1", async () => {
+      console.log("page url at the start of the test bar 1", page.url())
         await page.waitForSelector('option:not([value=""])');
 
         await page.screenshot({
