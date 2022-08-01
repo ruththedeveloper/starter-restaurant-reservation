@@ -181,6 +181,9 @@ async function update(req, res, next) {
   res.json({ data :{status:reservation.status}});
 }
 
+
+
+
 async function modify(req, res, next) {
   const { reservation_id } = req.params;
   const reservation = req.body.data;

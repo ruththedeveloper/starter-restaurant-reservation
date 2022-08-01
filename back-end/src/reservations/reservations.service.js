@@ -4,7 +4,7 @@ const knex = require("../db/connection");
 function list() {
   return knex("reservations")
     .select("*")
-    .whereNotIn("status",["finished","cancelled"])
+    .whereNotIn("status", ["finished", "cancelled"])
     .orderBy("reservations.reservation_date");
 }
 
@@ -33,7 +33,7 @@ function update(reservation_id, status) {
   return knex("reservations")
     .select("*")
     .where({ reservation_id })
-    .update({ status}, "*")
+    .update({ status }, "*")
     .then((updated) => updated[0]);
 }
 
@@ -42,6 +42,15 @@ function finish(reservation_id) {
     .select("*")
     .where({ reservation_id })
     .update({ status: "finished" });
+}
+
+function search(mobile_number) {
+  return knex("reservations")
+    .whereRaw(
+      "translate(mobile_number, '() -', '') like ?",
+      `%${mobile_number.replace(/\D/g, "")}%`
+    )
+    .orderBy("reservation_date");
 }
 
 function modify(reservation_id, reservation) {
@@ -61,5 +70,6 @@ module.exports = {
   read,
   finish,
   update,
+  search,
   modify,
 };
