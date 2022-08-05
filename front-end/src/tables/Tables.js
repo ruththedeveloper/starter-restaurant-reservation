@@ -8,8 +8,6 @@ function Tables() {
   const [tableError, setTableError] = useState(null);
   const [tableForm, setTableForm] = useState({ table_name: "", capacity: "" });
 
-  /// handleSubmit function
-
   async function handleSubmit(e) {
     e.preventDefault();
     const abortController = new AbortController();
@@ -88,10 +86,13 @@ function Tables() {
             className="btn btn-secondary me-md-2"
             type="button"
             onClick={handleCancel}
-          > <span className="oi oi-x"></span>
+          >
+            {" "}
+            <span className="oi oi-x"></span>
             Cancel
           </button>
-          <button className="btn btn-primary" type="submit"><span className="oi oi-check"></span>
+          <button className="btn btn-primary" type="submit">
+            <span className="oi oi-check"></span>
             Submit
           </button>
         </div>

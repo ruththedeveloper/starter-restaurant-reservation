@@ -36,7 +36,7 @@ function tableIsValid(req, res, next) {
 
 async function list(req, res, next) {
   const table = await service.list();
-  res.json({ data:table });
+  res.json({ data: table });
 }
 
 async function create(req, res, next) {

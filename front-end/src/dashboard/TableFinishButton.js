@@ -5,8 +5,6 @@ import { unassignedTable } from "../utils/api";
 function TableFinishButton({ status, table, loadDashboard }) {
   const history = useHistory();
 
- 
-
   async function handleFinish(table_id, reservation_id) {
     await unassignedTable(table_id, reservation_id);
     await loadDashboard();
@@ -16,11 +14,10 @@ function TableFinishButton({ status, table, loadDashboard }) {
   async function handleClick() {
     return window.confirm(
       "Is this table ready to seat new guests? This cannot be undone."
-    )? await handleFinish(table.table_id, table.reservation_id)
+    )
+      ? await handleFinish(table.table_id, table.reservation_id)
       : null;
   }
-
- 
 
   return (
     status === "Occupied" && (

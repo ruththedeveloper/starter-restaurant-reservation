@@ -84,7 +84,7 @@ function ReservationSeat() {
             Cancel
           </button>
           <button className="btn btn-primary" type="submit">
-            {/* <span className="oi oi-check"></span> */}
+             <span className="oi oi-check"></span> 
             Submit
           </button>
         </div>

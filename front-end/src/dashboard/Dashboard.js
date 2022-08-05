@@ -79,15 +79,19 @@ function Dashboard({ date }) {
         </button>
       </div>
       <ErrorAlert error={reservationsError} />
-      {/* {JSON.stringify(reservations)} */}
+
       <div className="row">
         <div className="col">
-        <ReservationTable reservations={reservations} setReservations ={setReservations} setReservationsError={setReservationsError
-        } />
+          <ReservationTable
+            reservations={reservations}
+            setReservations={setReservations}
+            setReservationsError={setReservationsError}
+          />
         </div>
 
         <div className="col">
-      <TableList tables={tables} loadDashboard={loadDashboard} /> </div>
+          <TableList tables={tables} loadDashboard={loadDashboard} />{" "}
+        </div>
       </div>
     </main>
   );

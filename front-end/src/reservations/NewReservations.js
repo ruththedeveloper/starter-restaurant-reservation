@@ -26,14 +26,12 @@ function NewReservations() {
     });
   }
 
-  
-
   const findErrors = (date, errors) => {
     isNotOnTuesday(date, errors);
     isInTheFuture(date, errors);
   };
 
-  async function handleSubmit( event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const abortController = new AbortController();
     const errors = [];

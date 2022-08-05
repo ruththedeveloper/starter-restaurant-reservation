@@ -152,7 +152,9 @@ async function list(req, res) {
   if (mobile_number) {
     reservations = await service.search(mobile_number);
   } else {
-    reservations = date ? await service.listByReservationDate(date) : await service.list();
+    reservations = date
+      ? await service.listByReservationDate(date)
+      : await service.list();
   }
   res.json({
     data: reservations,
@@ -172,17 +174,13 @@ async function read(req, res) {
 }
 
 async function update(req, res, next) {
-  
   const { reservation_id } = req.params;
   const { status } = req.body.data;
-  
+
   const reservation = await service.update(reservation_id, status);
   console.log("reserv", reservation);
-  res.json({ data :{status:reservation.status}});
+  res.json({ data: { status: reservation.status } });
 }
-
-
-
 
 async function modify(req, res, next) {
   const { reservation_id } = req.params;

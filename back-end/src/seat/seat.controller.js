@@ -67,17 +67,18 @@ async function tableIsOccupied(req, res, next) {
 async function update(req, res, next) {
   const { reservation_id } = req.body.data;
   const { table_id } = req.params;
-  await service.update(table_id, reservation_id,"seated");
+  await service.update(table_id, reservation_id, "seated");
   res.status(200).json({ data: reservation_id });
 }
 
 async function notAssigned(req, res, next) {
   const { table_id } = req.params;
-  // const reservation = await reservationService.finish(
-  //   res.locals.reservation_id
-  // );
-  
-  const table = await service.update(table_id, res.locals.reservation_id, "finished");
+
+  const table = await service.update(
+    table_id,
+    res.locals.reservation_id,
+    "finished"
+  );
   res.json({ data: table });
 }
 

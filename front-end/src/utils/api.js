@@ -156,16 +156,3 @@ export async function modifyReservation(id, res, signal) {
   };
   return await fetchJson(url, options, []);
 }
-
-//  // seat RESERVATION
-//   export async function  seatReservation(table_id,reservation_id,signal){
-//     const url = `${API_BASE_URL}/tables/${table_id}/seat`
-//     const options = {
-//       method: "POST",
-//       headers,
-//       body: JSON.stringify({ data:{reservation_id}}),
-//       signal,
-//     };
-//     return await fetchJson(url, options, []);
-
-//   }
